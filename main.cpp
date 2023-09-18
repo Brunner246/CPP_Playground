@@ -21,6 +21,28 @@ auto copyElisionSmartPtr() -> std::unique_ptr<Constructors::CBox3d>
 	return lBox;
 }
 
+struct CPosition
+{
+	int x;
+	int y;
+	int z;
+
+	[[nodiscard]] double length() const
+	{
+		return std::sqrt(x * x + y * y + z * z);
+	}
+
+	bool operator<(const CPosition& aOther) const
+	{
+		return this->length() < aOther.length();
+	}
+
+	bool operator>(const CPosition& aOther) const
+	{
+		return this->length() > aOther.length();
+	}
+};
+
 int main()
 {
 
@@ -123,6 +145,11 @@ int main()
 		std::cout << "Vector length: " << lVector.length() << std::endl;
 		lVector.setX(4.0);
 		std::cout << "New x-coordinate: " << lVector.getX() << std::endl;
+
+		auto lVector2 = Vector(1.0, 2.0, 4.0);
+		auto lMax = std::max(CPosition(100,100,100), CPosition(200,100,101));
+		std::cout << "Max: " << lMax.x << ", " << lMax.y << ", " << lMax.z << std::endl;
+
 	}
 	std::cout << std::endl;
 

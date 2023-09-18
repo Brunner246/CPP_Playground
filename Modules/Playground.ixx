@@ -48,7 +48,7 @@ public:
 		z = aZ;
 	}
 
-	[[nodiscard]] double length() noexcept
+	[[nodiscard]] double length() const noexcept
 	{
 		return std::sqrt(x * x + y * y + z * z);
 	}
