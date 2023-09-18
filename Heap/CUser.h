@@ -25,9 +25,9 @@ namespace Heap {
 
 		~CUser() noexcept;
 
-		std::string toString() const noexcept;
+		[[nodiscard]] std::string toString() const noexcept;
 
-		const std::string& getName() const noexcept;
+		[[nodiscard]] const std::string& getName() const noexcept;
 
 		void setName(const std::string& aName) noexcept;
 

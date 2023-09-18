@@ -4,6 +4,8 @@
 #include "Constructors/CCustomArray.h"
 #include "Heap/CUser.h"
 
+import Playground;
+import Playground.Test;
 
 auto copyElision() -> Constructors::CBox3d
 {
@@ -112,6 +114,17 @@ int main()
 			std::cout << lInitailizerList[il] << std::endl;
 		}
 	}
+
+	//////// Modules ////////
+	std::cout << std::endl;
+	{
+		Test::testFunctionModules();
+		auto lVector = Vector(1.0, 2.0, 3.0);
+		std::cout << "Vector length: " << lVector.length() << std::endl;
+		lVector.setX(4.0);
+		std::cout << "New x-coordinate: " << lVector.getX() << std::endl;
+	}
+	std::cout << std::endl;
 
 	return EXIT_SUCCESS;
 }

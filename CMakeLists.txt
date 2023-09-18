@@ -8,4 +8,7 @@ add_executable(CPP_Playground main.cpp
         Stack/stack.h
         Constructors/CBox3d.cpp
         Constructors/CBox3d.h
-        Constructors/CCustomArray.h Heap/CUser.h Heap/CUser.cpp)
+        Constructors/CCustomArray.h
+        Heap/CUser.h
+        Heap/CUser.cpp
+        Modules/Playground.ixx Modules/Playground.Test.ixx)
