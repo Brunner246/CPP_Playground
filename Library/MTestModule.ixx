@@ -3,8 +3,7 @@
 //
 module;
 
-export module  MTestModule;
-
+export module MTestModule;
 
 import <iostream>;
 import <source_location>;

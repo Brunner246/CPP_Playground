@@ -4,6 +4,7 @@ project(CPP_Playground)
 set(CMAKE_CXX_STANDARD 23)
 
 add_subdirectory(Library)
+add_subdirectory(Test)
 
 
 add_executable(CPP_Playground
@@ -18,8 +19,11 @@ add_executable(CPP_Playground
         Modules/Playground.ixx
         Modules/Playground.Test.ixx
         Modules/Position.ixx
-        Stack/StackMain.cpp Stack/StackMain.h)
+        Stack/StackMain.cpp
+        Stack/StackMain.h)
+
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
         Library
         )
+

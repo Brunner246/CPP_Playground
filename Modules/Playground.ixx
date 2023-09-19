@@ -7,7 +7,6 @@ module;
 
 export module Playground;
 
-
 export class Vector
 {
 public:

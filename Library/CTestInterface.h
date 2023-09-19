@@ -13,6 +13,7 @@ namespace Library {
 	{
 	public:
 		explicit CTestInterface(std::string&& aName);
+
 		~CTestInterface() override = default;
 
 		void doSomething() override;

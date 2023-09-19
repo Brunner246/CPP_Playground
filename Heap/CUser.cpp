@@ -13,7 +13,7 @@ Heap::CUser::CUser(const std::string &aName)
 }
 
 Heap::CUser::CUser(const Heap::CUser &aOther)
-: mName{new std::string{*aOther.mName}}
+: mName{std::make_unique<std::string>(*aOther.mName)}
 {
 	std::cout << "copy constructor CUser called" << std::endl;
 }
