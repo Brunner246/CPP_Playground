@@ -1,11 +1,14 @@
 #include <iostream>
-#include "Constructors/CBox3d.h"
+#include "Classes/Constructors/CBox3d.h"
 #include "Stack/stack.h"
-#include "Constructors/CCustomArray.h"
+#include "Classes/Constructors/CCustomArray.h"
 #include "Heap/CUser.h"
+#include "Library/ITestInterface.h"
+#include "Library/CTestInterface.h"
 
 import Playground;
 import Playground.Test;
+import Position;
 
 auto copyElision() -> Constructors::CBox3d
 {
@@ -21,27 +24,6 @@ auto copyElisionSmartPtr() -> std::unique_ptr<Constructors::CBox3d>
 	return lBox;
 }
 
-struct CPosition
-{
-	int x;
-	int y;
-	int z;
-
-	[[nodiscard]] double length() const
-	{
-		return std::sqrt(x * x + y * y + z * z);
-	}
-
-	bool operator<(const CPosition& aOther) const
-	{
-		return this->length() < aOther.length();
-	}
-
-	bool operator>(const CPosition& aOther) const
-	{
-		return this->length() > aOther.length();
-	}
-};
 
 int main()
 {
@@ -147,11 +129,21 @@ int main()
 		std::cout << "New x-coordinate: " << lVector.getX() << std::endl;
 
 		auto lVector2 = Vector(1.0, 2.0, 4.0);
-		auto lMax = std::max(CPosition(100,100,100), CPosition(200,100,101));
+		auto lMax = std::max(CPosition(100, 100, 100), CPosition(200, 100, 101));
 		std::cout << "Max: " << lMax.x << ", " << lMax.y << ", " << lMax.z << std::endl;
 
 	}
 	std::cout << std::endl;
 
+	//////// Import Library ////////
+
+	{
+		std::unique_ptr<Library::ITestInterface> lTestInterface = std::make_unique<Library::CTestInterface>("Test");
+		if (lTestInterface)
+			lTestInterface->doSomething();
+	}
+
+
 	return EXIT_SUCCESS;
 }
+
