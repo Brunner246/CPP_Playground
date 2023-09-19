@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Classes/Constructors/CBox3d.h"
-#include "Stack/stack.h"
+#include "Stack/StackMain.h"
 #include "Classes/Constructors/CCustomArray.h"
 #include "Heap/CUser.h"
 #include "Library/ITestInterface.h"
@@ -9,6 +9,7 @@
 import Playground;
 import Playground.Test;
 import Position;
+#include <algorithm>
 
 auto copyElision() -> Constructors::CBox3d
 {
@@ -29,41 +30,8 @@ int main()
 {
 
 	//////// Stack ////////
-	auto i{0};
-	std::cout << "main(): " << std::addressof(i) << std::endl;
-	std::cout << std::endl;
+	stackMain();
 
-	Stack::function2();
-	std::cout << std::endl;
-
-	Stack::function1();
-	std::cout << std::endl;
-
-	Stack::function3(i);
-	std::cout << std::endl;
-
-	Stack::function3(&i);
-	std::cout << std::endl;
-
-	{
-		const int lRet = Stack::function4(i);
-		std::cout << "Return value of function4(i): " << std::addressof(lRet) << std::endl;
-	}
-	std::cout << std::endl;
-	{
-		decltype(auto) lRet = Stack::function4Ref(i);
-		std::cout << "Return value of function4Ref(i): " << std::addressof(lRet) << std::endl;
-	}
-	std::cout << std::endl;
-	{
-		auto lRet = Stack::function5(&i);
-		std::cout << "Return value of function5(&i): " << std::addressof(lRet) << std::endl;
-	}
-	std::cout << std::endl;
-	{
-		auto lRet = Stack::function6();
-		std::cout << "Return value of function6(): " << std::addressof(lRet) << std::endl;
-	}
 	//////// Heap ////////
 	std::cout << " HEAP BEGIN" << std::endl;
 	std::cout << std::endl;
@@ -131,6 +99,14 @@ int main()
 		auto lVector2 = Vector(1.0, 2.0, 4.0);
 		auto lMax = std::max(CPosition(100, 100, 100), CPosition(200, 100, 101));
 		std::cout << "Max: " << lMax.x << ", " << lMax.y << ", " << lMax.z << std::endl;
+
+		const auto&[lMinPt, lMaxPt] = std::ranges::minmax(CPosition(100, 100, 100), CPosition(200, 100, 101),
+													  [](const auto& aLeft, const auto& aRight) {
+			return aLeft.z < aRight.z;
+		});
+
+		std::cout << "Min: " << lMinPt.x << ", " << lMinPt.y << ", " << lMinPt.z << std::endl;
+		std::cout << "Max: " << lMaxPt.x << ", " << lMaxPt.y << ", " << lMaxPt.z << std::endl;
 
 	}
 	std::cout << std::endl;

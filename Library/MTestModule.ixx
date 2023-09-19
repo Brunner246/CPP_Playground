@@ -1,14 +1,13 @@
 //
 // Created by michael.brunner on 19/09/2023.
 //
-
 module;
 
-#include <iostream>
-#include "ITestInterface.h"
-#include <source_location>
+export module  MTestModule;
 
-export module MTestModule;
+
+import <iostream>;
+import <source_location>;
 
 
 namespace Module {
