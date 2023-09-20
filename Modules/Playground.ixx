@@ -3,9 +3,12 @@
 //
 module;
 
-#include <cmath>
-
 export module Playground;
+
+import <iostream>;
+import <cmath>;
+import <source_location>;
+
 
 export class Vector
 {
@@ -16,6 +19,15 @@ public:
 			  , z{aZ}
 	{
 	}
+
+	Vector(const Vector& aOther)
+	: x{aOther.x}
+	, y{aOther.y}
+	, z{aOther.z}
+	{
+		std::cout << "Copy Ctor " << std::source_location::current().function_name() << std::endl;
+	}
+
 
 	[[nodiscard]] double getX() const noexcept
 	{

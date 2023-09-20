@@ -25,6 +25,20 @@ auto copyElisionSmartPtr() -> std::unique_ptr<Constructors::CBox3d>
 	return lBox;
 }
 
+auto callCopyConstructor(auto aValue)
+{
+	auto lValue = aValue;
+	return lValue;
+}
+
+std::shared_ptr<Constructors::CBox3d> callCopyConstructor(std::shared_ptr<Constructors::CBox3d> aBox)
+{
+	std::cout << "pointer count method begin " << aBox.use_count() << std::endl;
+	auto lValue = aBox;
+	std::cout << "pointer count method operator= " << aBox.use_count() << std::endl;
+	return lValue;
+}
+
 
 int main()
 {
@@ -67,6 +81,21 @@ int main()
 		auto lTestBoxSmartPtr = copyElisionSmartPtr();
 		std::cout << "copyElisionSmartPtr() check return value: " << std::addressof(lTestBoxSmartPtr) << std::endl;
 	}
+	{
+		std::cout << std::endl;
+		std::cout << "SHARED POINTER" << std::endl;
+
+		auto lSharedPtrBox = std::make_shared<Constructors::CBox3d>(1, 1, 1);
+		std::cout << "pointer first initalization " << lSharedPtrBox.use_count() << std::endl;
+
+		auto lSharedPtrBoxCopy = lSharedPtrBox;
+		std::cout << "pointer count operator= " << lSharedPtrBox.use_count() << std::endl;
+		std::shared_ptr<Constructors::CBox3d> lTest = callCopyConstructor(lSharedPtrBoxCopy);
+		std::cout << "pointer count method return value (back in main) " << lSharedPtrBox.use_count() << std::endl;
+		lTest->toString();
+		std::cout << "SHARED POINTER" << std::endl;
+		std::cout << std::endl;
+	}
 
 	{
 		auto lMyArray = Constructors::CCustomArray<int>{10};
@@ -96,14 +125,14 @@ int main()
 		lVector.setX(4.0);
 		std::cout << "New x-coordinate: " << lVector.getX() << std::endl;
 
-		auto lVector2 = Vector(1.0, 2.0, 4.0);
+		auto lVector2 = Vector(lVector);
 		auto lMax = std::max(CPosition(100, 100, 100), CPosition(200, 100, 101));
 		std::cout << "Max: " << lMax.x << ", " << lMax.y << ", " << lMax.z << std::endl;
 
-		const auto&[lMinPt, lMaxPt] = std::ranges::minmax(CPosition(100, 100, 100), CPosition(200, 100, 101),
-													  [](const auto& aLeft, const auto& aRight) {
-			return aLeft.z < aRight.z;
-		});
+		const auto &[lMinPt, lMaxPt] = std::ranges::minmax(CPosition(100, 100, 100), CPosition(200, 100, 101),
+		                                                   [](const auto &aLeft, const auto &aRight) {
+			                                                   return aLeft.z < aRight.z;
+		                                                   });
 
 		std::cout << "Min: " << lMinPt.x << ", " << lMinPt.y << ", " << lMinPt.z << std::endl;
 		std::cout << "Max: " << lMaxPt.x << ", " << lMaxPt.y << ", " << lMaxPt.z << std::endl;
