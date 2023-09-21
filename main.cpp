@@ -5,10 +5,12 @@
 #include "Heap/CUser.h"
 #include "Library/ITestInterface.h"
 #include "Library/CTestInterface.h"
+#include "Classes/OperatorOverloading/FreeOperator.h"
 
 import Playground;
 import Playground.Test;
 import Position;
+
 #include <algorithm>
 
 auto copyElision() -> Constructors::CBox3d
@@ -148,6 +150,14 @@ int main()
 			lTestInterface->doSomething();
 	}
 
+	std::vector<int> lIntVector;
+	lIntVector << 1;
+	lIntVector << 2;
+	lIntVector << 3;
+	lIntVector << 4;
+
+	auto lString = "Hello World"_str;
+	std::cout << lString << std::endl;
 
 	return EXIT_SUCCESS;
 }
