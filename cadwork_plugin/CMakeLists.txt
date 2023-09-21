@@ -8,6 +8,8 @@ add_definitions(-CWPLUGIN_EXPORTS)
 add_library(${PROJECT_NAME} SHARED
         library.cpp
         library_api.h
+        TestModule.ixx
+        IButton.h
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
