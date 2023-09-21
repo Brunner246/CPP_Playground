@@ -13,7 +13,6 @@ import TestModule;
 
 CWAPI3D_PLUGIN bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory);
 
-
 bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 {
 	if (!aFactory) {
@@ -49,6 +48,9 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 		lButton->onClick();
 	}
 	aFactory->getUtilityController()->printToConsole(L"\n");
+
+	// auto lResult = std::exchange(lButton, nullptr);
+
 	aFactory->getUtilityController()->printToConsole(L"plugin_x64_init done");
 
 	return EXIT_SUCCESS;

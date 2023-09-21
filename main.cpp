@@ -41,6 +41,36 @@ std::shared_ptr<Constructors::CBox3d> callCopyConstructor(std::shared_ptr<Constr
 	return lValue;
 }
 
+struct Beam
+{
+	[[nodiscard]] auto reflect_beam() const
+	{
+		return L"Beam";
+	}
+};
+
+struct Panel
+{
+	[[nodiscard]] auto reflect_panel() const
+	{
+		return L"Panel";
+	}
+};
+
+
+template<typename Component>
+auto reflect(const Component &aComponent)
+{
+	if constexpr (std::is_same_v<Component, Beam>) {
+		return aComponent.reflect_beam();
+	}
+	if constexpr (std::is_same_v<Component, Panel>) {
+		return aComponent.reflect_panel();
+	} else {
+		return L"Unknown";
+	}
+}
+
 
 int main()
 {
@@ -158,6 +188,13 @@ int main()
 
 	auto lString = "Hello World"_str;
 	std::cout << lString << std::endl;
+
+	auto lBeam = Beam{};
+	auto lPanel = Panel{};
+
+	std::wcout << reflect(lBeam) << std::endl;
+
+	std::wcout << reflect(lPanel) << std::endl;
 
 	return EXIT_SUCCESS;
 }
