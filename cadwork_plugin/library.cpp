@@ -14,7 +14,6 @@ import TestModule;
 CWAPI3D_PLUGIN bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory);
 
 
-
 bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 {
 	if (!aFactory) {
@@ -25,14 +24,21 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 	aFactory->getElementController()->createTextObject(L"Hello World", {0., 0., 0.},
 	                                                   {1., 0., 0.}, {0., 0., 1.}, 25);
 
-	std::function<void(void)> lOnClick = [&aFactory, counter = 0] () mutable   {
+	std::function<void(void)> lOnClick = [&aFactory, counter = 0]() mutable {
 		auto lDefaultText = std::wstring(L"Hello World");
 		auto lCount = std::to_wstring(counter++);
 
 		aFactory->getUtilityController()->printToConsole((lDefaultText + lCount).c_str());
 	};
 
-	std::unique_ptr<TestModule::IButton> lButton = std::make_unique<TestModule::CButton>(std::move(lOnClick));
+	std::unique_ptr<TestModule::IButton> lButton;
+	try {
+		lButton = std::make_unique<TestModule::CButton>(std::move(lOnClick));
+	}
+	catch (const std::invalid_argument &e) {
+		aFactory->getUtilityController()->printToConsole(std::wstring(e.what()).c_str());
+		return EXIT_FAILURE;
+	}
 
 	TestModule::Sleep::sleep(15);
 
