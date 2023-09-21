@@ -10,6 +10,7 @@
 #include <functional>
 
 import TestModule;
+#include <sstream>
 
 CWAPI3D_PLUGIN bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory);
 
@@ -35,7 +36,14 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 		lButton = std::make_unique<TestModule::CButton>(std::move(lOnClick));
 	}
 	catch (const std::invalid_argument &e) {
-		aFactory->getUtilityController()->printToConsole(std::wstring(e.what()).c_str());
+		auto lWhat = e.what();
+		CwAPI3D::narrowString lWhatCwAPI3D(lWhat);
+		CwAPI3D::wideString s = L"Error: ";
+		std::wstringstream wss;
+		wss << std::wstring(lWhatCwAPI3D.begin(), lWhatCwAPI3D.end());
+		std::wstring wideString = wss.str();
+
+		aFactory->getUtilityController()->printToConsole(wideString.c_str());
 		return EXIT_FAILURE;
 	}
 
