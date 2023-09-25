@@ -8,9 +8,11 @@
 #include "IButton.h"
 #include <vector>
 #include <functional>
-
-import TestModule;
 #include <sstream>
+import TestModule;
+import RestRequests;
+
+
 
 CWAPI3D_PLUGIN bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory);
 
@@ -19,6 +21,8 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 	if (!aFactory) {
 		return EXIT_FAILURE;
 	}
+
+
 	aFactory->getUtilityController()->printToConsole(L"plugin_x64_init");
 
 	aFactory->getElementController()->createTextObject(L"Hello World", {0., 0., 0.},
@@ -47,7 +51,7 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 		return EXIT_FAILURE;
 	}
 
-	TestModule::Sleep::sleep(15);
+	TestModule::Sleep::sleep(5);
 
 	aFactory->getUtilityController()->printToConsole(L"\n");
 	for (const auto il: {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) {
@@ -58,6 +62,11 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 	aFactory->getUtilityController()->printToConsole(L"\n");
 
 	// auto lResult = std::exchange(lButton, nullptr);
+
+
+	std::wstringstream lJsonStream;
+	Rest::GET(L"https://jsonplaceholder.typicode.com/users", lJsonStream);
+	aFactory->getUtilityController()->printToConsole(lJsonStream.str().c_str());
 
 	aFactory->getUtilityController()->printToConsole(L"plugin_x64_init done");
 

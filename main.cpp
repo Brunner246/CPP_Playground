@@ -6,6 +6,7 @@
 #include "Library/ITestInterface.h"
 #include "Library/CTestInterface.h"
 #include "Classes/OperatorOverloading/FreeOperator.h"
+#include <cpr/cpr.h>
 
 import Playground;
 import Playground.Test;
@@ -74,6 +75,15 @@ auto reflect(const Component &aComponent)
 
 int main()
 {
+
+	cpr::Response r = cpr::Get(cpr::Url{"https://jsonplaceholder.typicode.com/users"},
+	                           cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+	                           cpr::Parameters{{"", ""},
+	                                           {"", ""}});
+	r.status_code;                  // 200
+	r.header["content-type"];       // application/json; charset=utf-8
+	auto lResponse = r.text;                       // JSON text string
+	std::cout << lResponse << std::endl;
 
 	//////// Stack ////////
 	stackMain();
@@ -158,8 +168,8 @@ int main()
 		std::cout << "New x-coordinate: " << lVector.getX() << std::endl;
 
 		auto lVector2 = Vector(lVector);
-		auto lMax = std::max(CPosition(100, 100, 100), CPosition(200, 100, 101));
-		std::cout << "Max: " << lMax.x << ", " << lMax.y << ", " << lMax.z << std::endl;
+//		auto lMax = std::ranges::max(CPosition(100, 100, 100), CPosition(200, 100, 101));
+//		std::cout << "Max: " << lMax.x << ", " << lMax.y << ", " << lMax.z << std::endl;
 
 		const auto &[lMinPt, lMaxPt] = std::ranges::minmax(CPosition(100, 100, 100), CPosition(200, 100, 101),
 		                                                   [](const auto &aLeft, const auto &aRight) {

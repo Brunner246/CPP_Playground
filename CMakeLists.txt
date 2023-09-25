@@ -7,6 +7,7 @@ add_subdirectory(Library)
 add_subdirectory(Test)
 add_subdirectory(cadwork_plugin)
 
+find_package(cpr CONFIG REQUIRED)
 
 add_executable(CPP_Playground
         main.cpp
@@ -26,5 +27,6 @@ add_executable(CPP_Playground
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
         Library
+        cpr::cpr
         )
 
