@@ -5,18 +5,12 @@ set(CMAKE_CXX_STANDARD 23)
 SET(CADLIB_DIR "C:/source/cadlib")
 
 set(CADWORK_VERSION 30)
-#find_package(cpr REQUIRED)
-#find_package(CURL REQUIRED)
+
 find_package(cpprestsdk REQUIRED)
 
-#set(LIBCURL_DLL_PATH "C:/cadwork.dir/EXE_30/pclib.x64")
-#set(CPR_LIB_PATH "${CADLIB_DIR}/3rdParty/v_${CADWORK_VERSION}.0/cpr")
-# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "C:/Users/Public/Documents/cadwork/userprofil_${CADWORK_VERSION}/3d/API.x64/cadwork_plugin/")
 
 INCLUDE_DIRECTORIES(
         "${CADLIB_DIR}/v_${CADWORK_VERSION}.0/3d/CwAPI3D"
-#        "${CADLIB_DIR}/3rdParty//v_${CADWORK_VERSION}.0/curl"
-#        "${CPR_LIB_PATH}"
 )
 
 
@@ -26,14 +20,12 @@ add_library(${PROJECT_NAME} SHARED
         TestModule.ixx
         IButton.h
         RestRequests.ixx
+        ../Classes/Rule_of_/RuleOfFive.h
+        ../Classes/Rule_of_/RuleOfFive.h
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
         cpprestsdk::cpprest
-        #cpr::cpr
-        #CURL::libcurl
-#       ${CPR_LIB_PATH}/3rdParty/v_${CADWORK_VERSION}/cpr/x64/cpr
-#       ${CPR_LIB_PATH}/3rdParty/v_${CADWORK_VERSION}/curl/x64/libcurl
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE

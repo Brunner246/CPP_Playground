@@ -6,13 +6,16 @@
 #include "Library/ITestInterface.h"
 #include "Library/CTestInterface.h"
 #include "Classes/OperatorOverloading/FreeOperator.h"
+#include "Classes/OperatorOverloading/StructCast.h"
 #include <cpr/cpr.h>
+#include <string>
 
 import Playground;
 import Playground.Test;
 import Position;
 
 #include <algorithm>
+
 
 auto copyElision() -> Constructors::CBox3d
 {
@@ -73,6 +76,8 @@ auto reflect(const Component &aComponent)
 }
 
 
+
+
 int main()
 {
 
@@ -131,6 +136,18 @@ int main()
 		std::cout << "pointer first initalization " << lSharedPtrBox.use_count() << std::endl;
 
 		auto lSharedPtrBoxCopy = lSharedPtrBox;
+
+		std::weak_ptr<Constructors::CBox3d> lWeakPtr;
+		{
+			lWeakPtr = std::weak_ptr<Constructors::CBox3d>(lSharedPtrBox);
+			std::cout << "weak pointer count " << lWeakPtr.use_count() << std::endl;
+		}
+		lWeakPtr.reset();
+		std::cout << "weak pointer count " << lWeakPtr.use_count() << std::endl;
+		if (lWeakPtr.expired())
+		{
+			std::cout << "    weak pointer expired" << std::endl;
+		}
 		std::cout << "pointer count operator= " << lSharedPtrBox.use_count() << std::endl;
 		std::shared_ptr<Constructors::CBox3d> lTest = callCopyConstructor(lSharedPtrBoxCopy);
 		std::cout << "pointer count method return value (back in main) " << lSharedPtrBox.use_count() << std::endl;
@@ -205,6 +222,10 @@ int main()
 	std::wcout << reflect(lBeam) << std::endl;
 
 	std::wcout << reflect(lPanel) << std::endl;
+
+	std::cout << 1'500.0_m << " m" << std::endl;
+
+	ConversionOperator::testFunction();
 
 	return EXIT_SUCCESS;
 }

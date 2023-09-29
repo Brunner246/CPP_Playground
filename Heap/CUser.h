@@ -19,7 +19,7 @@ namespace Heap {
 
 		CUser(CUser &&aOther) noexcept;
 
-		CUser &operator=(const CUser &aOther);
+		auto operator=(const CUser &aOther) -> CUser &;
 
 		CUser &operator=(CUser &&aOther) noexcept;
 

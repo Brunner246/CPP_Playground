@@ -9,6 +9,7 @@
 #include <vector>
 #include <functional>
 #include <sstream>
+#include <format>
 import TestModule;
 import RestRequests;
 
@@ -21,9 +22,29 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 	if (!aFactory) {
 		return EXIT_FAILURE;
 	}
-
-
 	aFactory->getUtilityController()->printToConsole(L"plugin_x64_init");
+
+	auto lGroupingType = aFactory->getAttributeController()->getElementGroupingType();
+	std::wstring lGroupBy = lGroupingType == CwAPI3D::elementGroupingType::subgroup ? L"Subgroup" : L"Group";
+	aFactory->getUtilityController()->printToConsole(lGroupBy.data());
+	auto lActiveElementIds = aFactory->getElementController()->getActiveIdentifiableElementIDs();
+	CwAPI3D::Interfaces::ICwAPI3DIfcOptions* lOptions = aFactory->createIfcOptions();
+	auto lProjectData = lOptions->getCwAPI3DIfcOptionsProjectData();
+
+	// aFactory->getBimController()->exportIfc2x3SilentlyWithOptions(lActiveElementIds, L"test.ifc",
+
+	if (lActiveElementIds->count() > 0) {
+		for (auto lCount{0}; lCount < lActiveElementIds->count(); lCount++) {
+			auto lFacetList = aFactory->getGeometryController()->getElementFacets(lActiveElementIds->at(lCount));
+			for (auto il{0}; il < lFacetList->count(); il++) {
+				auto lNormal = lFacetList->getNormalVector(il);
+				lFacetList->getDistanceToOrigin(il);
+				auto lFormat = std::format("Normal: ({}, {}, {})", lNormal.mX, lNormal.mY, lNormal.mZ);
+				auto lWideString = std::wstring(lFormat.begin(), lFormat.end());
+				aFactory->getUtilityController()->printToConsole(lWideString.c_str());
+			}
+		}
+	}
 
 	aFactory->getElementController()->createTextObject(L"Hello World", {0., 0., 0.},
 	                                                   {1., 0., 0.}, {0., 0., 1.}, 25);

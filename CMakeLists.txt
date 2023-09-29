@@ -22,7 +22,10 @@ add_executable(CPP_Playground
         Modules/Playground.Test.ixx
         Modules/Position.ixx
         Stack/StackMain.cpp
-        Stack/StackMain.h Classes/OperatorOverloading/FreeOperator.h)
+        Stack/StackMain.h Classes/OperatorOverloading/FreeOperator.h
+        Random/WrapDelete.h
+        Random/WrapDelete.h
+        Classes/OperatorOverloading/StructCast.h)
 
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

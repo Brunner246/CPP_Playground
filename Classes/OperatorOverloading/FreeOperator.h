@@ -15,3 +15,12 @@ std::string operator""_str(const char* aChar, std::size_t aSize)
 {
 	return {aChar};
 }
+
+auto operator"" _m(long double aMilliMeter)
+{
+	return aMilliMeter / 1000.0;
+}
+
+
+
+
