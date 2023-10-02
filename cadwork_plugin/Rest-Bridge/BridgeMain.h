@@ -17,7 +17,7 @@ inline auto bridgeMain()
 	std::unique_ptr<IBridgeAbstraction> lBridge = std::make_unique<CBridgeAbstraction>(std::move(lImpl));
 
 	std::wstringstream lOut;
-	std::wstring lUrl = L"https:\\api.github.com\\users\\octocat\\orgs";
+	std::wstring lUrl = L"https://jsonplaceholder.typicode.com/users";
 
 	lBridge->performRequest(lUrl, lOut);
 
