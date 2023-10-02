@@ -3,6 +3,11 @@ project(CPP_Playground)
 
 set(CMAKE_CXX_STANDARD 23)
 
+SET(CADLIB_DIR "C:/source/cadlib")
+
+set(CADWORK_VERSION 30)
+
+
 add_subdirectory(Library)
 add_subdirectory(Test)
 add_subdirectory(cadwork_plugin)
@@ -25,7 +30,10 @@ add_executable(CPP_Playground
         Stack/StackMain.h Classes/OperatorOverloading/FreeOperator.h
         Random/WrapDelete.h
         Random/WrapDelete.h
-        Classes/OperatorOverloading/StructCast.h)
+        Classes/OperatorOverloading/StructCast.h
+        Random/ScopeRAII.h
+        Classes/OOD/CEntity.h
+        Classes/OOD/CValue.h)
 
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

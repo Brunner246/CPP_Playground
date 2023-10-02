@@ -10,6 +10,7 @@
 #include <functional>
 #include <sstream>
 #include <format>
+#include "Rest-Bridge/BridgeMain.h"
 import TestModule;
 import RestRequests;
 
@@ -89,7 +90,12 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 	Rest::GET(L"https://jsonplaceholder.typicode.com/users", lJsonStream);
 	aFactory->getUtilityController()->printToConsole(lJsonStream.str().c_str());
 
+	auto lResult = bridgeMain();
+	aFactory->getUtilityController()->printToConsole(lResult.c_str());
+
 	aFactory->getUtilityController()->printToConsole(L"plugin_x64_init done");
+
+
 
 	return EXIT_SUCCESS;
 }

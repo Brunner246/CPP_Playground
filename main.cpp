@@ -7,6 +7,7 @@
 #include "Library/CTestInterface.h"
 #include "Classes/OperatorOverloading/FreeOperator.h"
 #include "Classes/OperatorOverloading/StructCast.h"
+#include "Classes/OOD/CEntity.h"
 #include <cpr/cpr.h>
 #include <string>
 
@@ -226,6 +227,12 @@ int main()
 	std::cout << 1'500.0_m << " m" << std::endl;
 
 	ConversionOperator::testFunction();
+
+	if(!OOD::testFunction())
+	{
+	std::cout << "entities not equal" << std::endl;
+	}
+
 
 	return EXIT_SUCCESS;
 }

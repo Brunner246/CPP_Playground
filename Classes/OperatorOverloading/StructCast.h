@@ -29,6 +29,11 @@ namespace Implementation {
 		{
 			std::cout << "TestImplementation::test()" << std::endl;
 		}
+
+		void testFromImplementation()
+		{
+			std::cout << "TestImplementation::testFromImplementation()" << std::endl;
+		}
 	};
 }
 
@@ -77,6 +82,7 @@ namespace ConversionOperator {
 		if (lTest) {
 			std::cout << "TestStruct " << std::addressof(lTest) << std::endl;
 			lTest->test();
+			lTest->testFromImplementation();
 
 			lTest = nullptr;
 		}

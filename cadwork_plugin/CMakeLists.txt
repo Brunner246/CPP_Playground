@@ -20,8 +20,14 @@ add_library(${PROJECT_NAME} SHARED
         TestModule.ixx
         IButton.h
         RestRequests.ixx
-        ../Classes/Rule_of_/RuleOfFive.h
-        ../Classes/Rule_of_/RuleOfFive.h
+        Rest-Bridge/BridgeMain.h
+        Rest-Bridge/Implementation/IBridgeImplementation.h
+        Rest-Bridge/Implementation/CConcreteImplementationA.cpp
+        Rest-Bridge/Implementation/CConcreteImplementationA.h
+        Rest-Bridge/Abstraction/IBridgeAbstraction.h
+        Rest-Bridge/Abstraction/CBridgeAbstraction.cpp
+        Rest-Bridge/Abstraction/CBridgeAbstraction.cpp
+        Rest-Bridge/Abstraction/CBridgeAbstraction.h
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
