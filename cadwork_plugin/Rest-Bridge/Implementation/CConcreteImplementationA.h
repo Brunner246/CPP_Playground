@@ -11,7 +11,9 @@
 class CConcreteImplementationA : public IBridgeImplementation
 {
 public:
-	void performRequestImpl(const std::wstring& aUrl, std::wstringstream& aOut) const override;
+	~CConcreteImplementationA() override = default;
+
+	void performRequestImpl(const std::string& aUrl, std::stringstream& aOut) const override;
 
 private:
 

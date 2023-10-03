@@ -10,7 +10,7 @@
 class IBridgeAbstraction {
 public:
 	virtual ~IBridgeAbstraction() = default;
-	virtual void performRequest(const std::wstring& aUrl, std::wstringstream& aOut) const = 0;
+	virtual void performRequest(const std::string& aUrl, std::stringstream& aOut) const = 0;
 };
 
 

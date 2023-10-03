@@ -11,12 +11,14 @@
 #include <sstream>
 #include <format>
 #include "Rest-Bridge/BridgeMain.h"
+
 import TestModule;
 import RestRequests;
 
 
 
 CWAPI3D_PLUGIN bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory);
+
 
 bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 {
@@ -31,8 +33,21 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 	auto lActiveElementIds = aFactory->getElementController()->getActiveIdentifiableElementIDs();
 	CwAPI3D::Interfaces::ICwAPI3DIfcOptions* lOptions = aFactory->createIfcOptions();
 	auto lProjectData = lOptions->getCwAPI3DIfcOptionsProjectData();
+	auto lLevelOfDetail = lOptions->getCwAPI3DIfcOptionsLevelOfDetail();
+	lLevelOfDetail->setCutDrillings(true);
+	lLevelOfDetail->setExportVbaDrillings(true);
+	lLevelOfDetail->setExportVbaComponents(true);
+	auto aggregation = lOptions->getCwAPI3DIfcOptionsAggregation();
+	CwAPI3D::ifcElementCombineBehaviour lAggregatedBy = aggregation->getExportElementCombineBehavior();
+	aggregation->setConsiderElementModuleAgregation(true);
+	aggregation->setExportElementCombineBehavior(CwAPI3D::ifcElementCombineBehaviour::element_assembly);
+	aggregation->setElementModuleAgregationAttribute(CwAPI3D::elementGroupingType::subgroup);
 
-	// aFactory->getBimController()->exportIfc2x3SilentlyWithOptions(lActiveElementIds, L"test.ifc",
+	if (auto lExported =aFactory->getBimController()->exportIfc4SilentlyWithOptions(lActiveElementIds, L"C:\\Users\\michael.brunner\\Downloads\\test.ifc", lOptions);
+			lExported)
+	{
+		aFactory->getUtilityController()->printToConsole(L"Exported");
+	}
 
 	if (lActiveElementIds->count() > 0) {
 		for (auto lCount{0}; lCount < lActiveElementIds->count(); lCount++) {
@@ -73,7 +88,13 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 		return EXIT_FAILURE;
 	}
 
-	TestModule::Sleep::sleep(5);
+	auto joinable_thread = std::jthread([&aFactory]{
+		for (const auto il : {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) {
+			aFactory->getUtilityController()->printToConsole(std::to_wstring(il).c_str());
+			aFactory->getUtilityController()->printToConsole(L"\n");
+		}
+	});
+	// TestModule::Sleep::sleep(5);
 
 	aFactory->getUtilityController()->printToConsole(L"\n");
 	for (const auto il: {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) {
@@ -91,7 +112,8 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 	aFactory->getUtilityController()->printToConsole(lJsonStream.str().c_str());
 	aFactory->getUtilityController()->printToConsole(L"\n");
 	auto lResult = bridgeMain();
-	aFactory->getUtilityController()->printToConsole(lResult.c_str());
+
+	aFactory->getUtilityController()->printToConsole(std::wstring{lResult.begin(), lResult.end()}.c_str());
 
 	aFactory->getUtilityController()->printToConsole(L"plugin_x64_init done");
 

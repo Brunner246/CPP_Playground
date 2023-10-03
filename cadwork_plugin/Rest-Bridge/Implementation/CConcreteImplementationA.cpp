@@ -5,26 +5,24 @@
 #include <cpprest/http_client.h>
 #include "CConcreteImplementationA.h"
 
-void CConcreteImplementationA::performRequestImpl(const std::wstring &aUrl, std::wstringstream &aOut) const
+void CConcreteImplementationA::performRequestImpl(const std::string &aUrl, std::stringstream &aOut) const
 {
-	web::http::client::http_client client(aUrl);
+	web::http::client::http_client client(std::wstring(aUrl.begin(), aUrl.end()));
 
 	client.request(web::http::methods::GET)
-			.then([&aOut](const web::http::http_response& response)
-			      {
-				      if (response.status_code() == web::http::status_codes::OK)
-				      {
-					      return response.extract_json();
-				      }
-				      else
-				      {
-					      std::wcerr << L"Error: " << response.status_code() << std::endl;
-					      return concurrency::task_from_result(web::json::value());
-				      }
-			      })
-			.then([&aOut](const web::json::value& jsonValue)
-			      {
-				      aOut << jsonValue.serialize();
-			      })
+			.then([&aOut](const web::http::http_response &response) {
+				if (response.status_code() == web::http::status_codes::OK) {
+					return response.extract_json();
+				} else {
+					std::wcerr << L"Error: " << response.status_code() << std::endl;
+					return concurrency::task_from_result(web::json::value());
+				}
+			})
+			.then([&aOut](const web::json::value &jsonValue) {
+				std::wstringstream lStream;
+				lStream << jsonValue.serialize();
+				auto lString = std::string{lStream.str().begin(), lStream.str().end()};
+				aOut << lString;
+			})
 			.wait();
 }

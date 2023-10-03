@@ -12,10 +12,9 @@
 class CBridgeAbstraction : public IBridgeAbstraction
 {
 public:
-	explicit CBridgeAbstraction(std::unique_ptr<IBridgeImplementation> impl)
-	: implementation(std::move(impl))
-	{}
-	void performRequest(const std::wstring& aUrl, std::wstringstream& aOut) const override;
+	explicit CBridgeAbstraction(std::unique_ptr<IBridgeImplementation> impl);
+
+	void performRequest(const std::string& aUrl, std::stringstream& aOut) const override;
 
 private:
 	std::unique_ptr<IBridgeImplementation> implementation;

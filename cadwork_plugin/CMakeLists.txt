@@ -9,8 +9,15 @@ set(CADWORK_VERSION 30)
 find_package(cpprestsdk REQUIRED)
 
 
+
 INCLUDE_DIRECTORIES(
         "${CADLIB_DIR}/v_${CADWORK_VERSION}.0/3d/CwAPI3D"
+        "${CADLIB_DIR}/3rdParty/v_${CADWORK_VERSION}.0/cpr"
+)
+
+link_directories(
+        "${CADLIB_DIR}/3rdParty/v_${CADWORK_VERSION}.0/cpr/x64"
+        "${CADLIB_DIR}/3rdParty/v_${CADWORK_VERSION}.0/curl/x64"
 )
 
 
@@ -28,10 +35,14 @@ add_library(${PROJECT_NAME} SHARED
         Rest-Bridge/Abstraction/CBridgeAbstraction.cpp
         Rest-Bridge/Abstraction/CBridgeAbstraction.cpp
         Rest-Bridge/Abstraction/CBridgeAbstraction.h
+        Rest-Bridge/Implementation/CConcreteImplementationB.cpp
+        Rest-Bridge/Implementation/CConcreteImplementationB.h
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
         cpprestsdk::cpprest
+        libcurl
+        cpr
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
