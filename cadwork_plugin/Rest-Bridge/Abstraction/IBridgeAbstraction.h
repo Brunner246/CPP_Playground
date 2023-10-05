@@ -13,5 +13,4 @@ public:
 	virtual void performRequest(const std::string& aUrl, std::stringstream& aOut) const = 0;
 };
 
-
 #endif //CPP_PLAYGROUND_IBRIDGEABSTRACTION_H

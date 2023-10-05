@@ -12,6 +12,7 @@
 #include <format>
 #include "Rest-Bridge/BridgeMain.h"
 
+
 import TestModule;
 import RestRequests;
 
@@ -43,7 +44,9 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 	aggregation->setExportElementCombineBehavior(CwAPI3D::ifcElementCombineBehaviour::element_assembly);
 	aggregation->setElementModuleAgregationAttribute(CwAPI3D::elementGroupingType::subgroup);
 
-	if (auto lExported =aFactory->getBimController()->exportIfc4SilentlyWithOptions(lActiveElementIds, L"C:\\Users\\michael.brunner\\Downloads\\test.ifc", lOptions);
+	// aFactory->getUtilityController()->executeShortcut(CwAPI3D::shortcutKeyModifier::Shift, CwAPI3D::shortcutKey::F6);
+
+	if (auto lExported =aFactory->getBimController()->exportIfc2x3SilentlyWithOptions(lActiveElementIds, L"C:\\Users\\michael.brunner\\Downloads\\test.ifc", lOptions);
 			lExported)
 	{
 		aFactory->getUtilityController()->printToConsole(L"Exported");
@@ -88,13 +91,15 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 		return EXIT_FAILURE;
 	}
 
-	auto joinable_thread = std::jthread([&aFactory]{
-		for (const auto il : {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) {
-			aFactory->getUtilityController()->printToConsole(std::to_wstring(il).c_str());
-			aFactory->getUtilityController()->printToConsole(L"\n");
-		}
-	});
-	// TestModule::Sleep::sleep(5);
+//	auto joinable_thread = std::jthread([&aFactory]{
+//		for (const auto il : {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) {
+//			aFactory->getUtilityController()->printToConsole(std::to_wstring(il).c_str());
+//			aFactory->getUtilityController()->printToConsole(L"\n");
+//		}
+//	});
+	TestModule::Sleep::sleep(5);
+
+	// std::this_thread::sleep_for(std::chrono::seconds(5));
 
 	aFactory->getUtilityController()->printToConsole(L"\n");
 	for (const auto il: {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) {
@@ -115,6 +120,7 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 
 	aFactory->getUtilityController()->printToConsole(std::wstring{lResult.begin(), lResult.end()}.c_str());
 
+	TestModule::Sleep::sleep(5);
 	aFactory->getUtilityController()->printToConsole(L"plugin_x64_init done");
 
 

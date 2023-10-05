@@ -20,8 +20,13 @@ void CConcreteImplementationA::performRequestImpl(const std::string &aUrl, std::
 			})
 			.then([&aOut](const web::json::value &jsonValue) {
 				std::wstringstream lStream;
-				lStream << jsonValue.serialize();
-				auto lString = std::string{lStream.str().begin(), lStream.str().end()};
+				auto lTest = jsonValue.serialize();
+
+//				lStream << jsonValue.serialize();
+//				auto lWString = lStream.str();
+				std::string lString(lTest.begin(), lTest.end());
+
+
 				aOut << lString;
 			})
 			.wait();

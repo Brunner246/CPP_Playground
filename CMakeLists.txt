@@ -33,7 +33,8 @@ add_executable(CPP_Playground
         Classes/OperatorOverloading/StructCast.h
         Random/ScopeRAII.h
         Classes/OOD/CEntity.h
-        Classes/OOD/CValue.h)
+        Classes/OOD/CValue.h
+        Concepts/CDividable.h)
 
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

@@ -10,7 +10,7 @@ export module TestModule;
 
 import <functional>;
 import <stdexcept>;
-//import <thread>;
+import <thread>;
 
 namespace TestModule
 {
@@ -36,13 +36,13 @@ namespace TestModule
 		std::function<void(void)> mOnClick;
 	};
 
-//	namespace Sleep
-//	{
-//		export void sleep(int aSeconds)
-//		{
-//			std::this_thread::sleep_for(std::chrono::seconds(aSeconds));
-//		}
-//	}
+	namespace Sleep
+	{
+		export void sleep(int aSeconds)
+		{
+			std::this_thread::sleep_for(std::chrono::seconds(aSeconds));
+		}
+	}
 }
 
 

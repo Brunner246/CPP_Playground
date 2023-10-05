@@ -8,6 +8,7 @@
 #include "Classes/OperatorOverloading/FreeOperator.h"
 #include "Classes/OperatorOverloading/StructCast.h"
 #include "Classes/OOD/CEntity.h"
+#include "Concepts/CDividable.h"
 #include <cpr/cpr.h>
 #include <string>
 
@@ -233,6 +234,10 @@ int main()
 	std::cout << "entities not equal" << std::endl;
 	}
 
+	{
+		auto lDividable = CDividable<int>();
+		lDividable.divide(1, 2);
+	}
 
 	return EXIT_SUCCESS;
 }
