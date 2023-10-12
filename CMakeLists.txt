@@ -34,7 +34,15 @@ add_executable(CPP_Playground
         Random/ScopeRAII.h
         Classes/OOD/CEntity.h
         Classes/OOD/CValue.h
-        Concepts/CDividable.h)
+        Concepts/CDividable.h
+        Concepts/CPoint3D.h
+        Modules/AirlineTicket.ixx
+        Modules/ModuleInterfaceUnit.ixx
+        Modules/ModuleExample.ixx
+        ProxyObjects/CVec3D.ixx
+        Modules/Abstract/MInterface.ixx
+        Modules/Abstract/MImplementation1.ixx
+        Concepts/CNotNullptr.h)
 
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -42,3 +50,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         cpr::cpr
         )
 
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+        PARALLEL
+)

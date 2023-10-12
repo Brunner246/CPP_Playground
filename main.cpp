@@ -11,12 +11,26 @@
 #include "Concepts/CDividable.h"
 #include <cpr/cpr.h>
 #include <string>
+#include <algorithm>
+#include "Concepts/CPoint3D.h"
+#include "Concepts/CNotNullptr.h"
 
 import Playground;
 import Playground.Test;
 import Position;
+import CVec3D;
+import MInterface;
+import MImplementation;
 
-#include <algorithm>
+#if PARALLEL
+
+#include <execution>
+
+#define PAR std::execution::par,
+#else
+#define SEQ
+#define PAR
+#endif
 
 
 auto copyElision() -> Constructors::CBox3d
@@ -76,8 +90,6 @@ auto reflect(const Component &aComponent)
 		return L"Unknown";
 	}
 }
-
-
 
 
 int main()
@@ -146,8 +158,7 @@ int main()
 		}
 		lWeakPtr.reset();
 		std::cout << "weak pointer count " << lWeakPtr.use_count() << std::endl;
-		if (lWeakPtr.expired())
-		{
+		if (lWeakPtr.expired()) {
 			std::cout << "    weak pointer expired" << std::endl;
 		}
 		std::cout << "pointer count operator= " << lSharedPtrBox.use_count() << std::endl;
@@ -215,6 +226,15 @@ int main()
 	lIntVector << 3;
 	lIntVector << 4;
 
+	{
+		std::list<int> lIntList(1000);
+		std::ranges::iota(lIntList, 0);
+		auto lResult = std::reduce(PAR lIntList.begin(), lIntList.end(), 0, [](auto aLeft, auto aRight) {
+			return aLeft + aRight;
+		});
+		std::cout << "Result: " << lResult << std::endl;
+	}
+
 	auto lString = "Hello World"_str;
 	std::cout << lString << std::endl;
 
@@ -229,14 +249,52 @@ int main()
 
 	ConversionOperator::testFunction();
 
-	if(!OOD::testFunction())
-	{
-	std::cout << "entities not equal" << std::endl;
+	if (!OOD::testFunction()) {
+		std::cout << "entities not equal" << std::endl;
 	}
 
 	{
 		auto lDividable = CDividable<int>();
 		lDividable.divide(1, 2);
+	}
+
+	double lDouble = 123.456;
+	int lInt1 = (int) lDouble;
+	int lInt2 = static_cast<int>(lDouble);
+	int lInt3 = static_cast<int>(std::floor(lDouble));
+	int lInt4 = static_cast<int>(std::ceil(lDouble));
+	{
+		auto lPoint3D = CPoint3D<double>{1.0, 2.0, 3.0};
+		lPoint3D.x();
+	}
+
+	{
+		auto vec1 = Geometry::CVec3D{1, 2, 3};
+		auto vec2 = Geometry::CVec3D{4, 5, 6};
+
+		if (vec1.length() < vec2.length()) {
+			std::cout << "vec1 is shorter than vec2" << std::endl;
+			double lLength1 = vec1.length();
+			double lLength2 = vec2.length();
+			std::cout << "vec1 length: " << lLength1 << std::endl;
+			std::cout << "vec2 length: " << lLength2 << std::endl;
+		}
+		if (vec1.length() > 1e-6) {
+			std::cout << "vec1 is not zero" << std::endl;
+		}
+	}
+
+	{
+		auto lMyClass = ImplementationFactory::createImplementation(ImplementationType::Impl1);
+		lMyClass->foo();
+		lMyClass->baz();
+
+
+		std::shared_ptr<MInterface> lMyClass2 = std::make_shared<Impl2::CImplementation2>();
+		lMyClass2->baz();
+
+		CNotNullptr lNotNull = CNotNullptr<decltype(lMyClass2)>(lMyClass2);
+		auto lGet = lNotNull.get();
 	}
 
 	return EXIT_SUCCESS;

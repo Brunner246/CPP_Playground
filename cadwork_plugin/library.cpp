@@ -81,13 +81,14 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 	}
 	catch (const std::invalid_argument &e) {
 		auto lWhat = e.what();
-		CwAPI3D::narrowString lWhatCwAPI3D(lWhat);
-		CwAPI3D::wideString s = L"Error: ";
+		std::basic_string<char> lWhatCwAPI3D(lWhat);
+		std::wstring lWhatWideString(lWhatCwAPI3D.begin(), lWhatCwAPI3D.end());
+		// CwAPI3D::narrowString lWhatCwAPI3D(lWhat);
 		std::wstringstream wss;
 		wss << std::wstring(lWhatCwAPI3D.begin(), lWhatCwAPI3D.end());
 		std::wstring wideString = wss.str();
 
-		aFactory->getUtilityController()->printToConsole(wideString.c_str());
+		aFactory->getUtilityController()->printToConsole(lWhatWideString.c_str());
 		return EXIT_FAILURE;
 	}
 

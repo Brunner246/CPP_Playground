@@ -24,11 +24,10 @@ public:
 	{
 		return a / b;
 	}
-
-
-private:
-
 };
+
+// auto lDividable = CDividable<int>();
+// lDividable.divide(1, 2);
 
 
 #endif //CPP_PLAYGROUND_CDIVIDABLE_H
