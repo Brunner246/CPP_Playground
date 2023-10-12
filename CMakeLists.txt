@@ -42,7 +42,11 @@ add_executable(CPP_Playground
         ProxyObjects/CVec3D.ixx
         Modules/Abstract/MInterface.ixx
         Modules/Abstract/MImplementation1.ixx
-        Concepts/CNotNullptr.h)
+        Concepts/CNotNullptr.h
+        ProxyObjects/ExtensionMethod.h
+        ParallelProgramming/MAccount.ixx
+        ParallelProgramming/FuturePromises.ixx
+        ProxyObjects/CWriteReadLazy.h)
 
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

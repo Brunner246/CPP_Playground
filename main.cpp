@@ -14,13 +14,18 @@
 #include <algorithm>
 #include "Concepts/CPoint3D.h"
 #include "Concepts/CNotNullptr.h"
+#include "ProxyObjects/ExtensionMethod.h"
+#include "ProxyObjects/CWriteReadLazy.h"
+#include <cassert>
 
 import Playground;
 import Playground.Test;
 import Position;
 import CVec3D;
-import MInterface;
 import MImplementation;
+import MInterface;
+import MAccount;
+import FuturePromises;
 
 #if PARALLEL
 
@@ -295,6 +300,63 @@ int main()
 
 		CNotNullptr lNotNull = CNotNullptr<decltype(lMyClass2)>(lMyClass2);
 		auto lGet = lNotNull.get();
+	}
+
+	{
+		using namespace std::string_literals;
+		std::vector<std::string> lVec{"foo"s, "bar"s, "baz"s};
+		auto lResult = ExtensionMethod::testMethod(lVec, "bar"s);
+		if (lResult) {
+			std::cout << "Found" << std::endl;
+		} else {
+			std::cout << "Not found" << std::endl;
+		}
+
+		auto lIntResult = ExtensionMethod::testMethod(lIntVector, 3);
+		if (lIntResult) {
+			std::cout << "Found" << std::endl;
+		} else {
+			std::cout << "Not found" << std::endl;
+		}
+	}
+
+	{
+		auto lAccount1 = BankAccount::CAccount(1'000);
+		auto lAccount2 = BankAccount::CAccount(2'000);
+
+		std::cout << "Account 1: " << lAccount1.getBalance() << std::endl;
+		std::cout << "Account 2: " << lAccount2.getBalance() << std::endl;
+
+		BankAccount::transferMoney(lAccount1, lAccount2, 500);
+
+		std::cout << "Account 1: " << lAccount1.getBalance() << std::endl;
+		std::cout << "Account 2: " << lAccount2.getBalance() << std::endl;
+
+	}
+	{
+		std::promise<int> lPromise;
+		int lQuotient = 10;
+		int lDividend = 0;
+		std::jthread lThread{divide, lQuotient, lDividend, std::ref(lPromise)};
+
+		auto lFuture = lPromise.get_future();
+		std::cout << "Waiting for result..." << std::endl;
+		try{
+			auto lResult = lFuture.get();
+			std::cout << "Result: " << lResult << std::endl;
+			assert((lQuotient/ lDividend) == lResult);
+		} catch (const std::invalid_argument& e) {
+			std::cout << "Exception: " << e.what() << std::endl;
+		}
+
+	}
+	{
+	writeFile();
+	auto lReader = CWriteReadLazy(R"(C:\Users\michael.brunner\CLionProjects\CPP-Playground\ProxyObjects\fstream.dat)");
+	auto lStream = lReader.read();
+
+	std::cout << lStream.str() << std::endl;
+
 	}
 
 	return EXIT_SUCCESS;
