@@ -46,7 +46,16 @@ add_executable(CPP_Playground
         ProxyObjects/ExtensionMethod.h
         ParallelProgramming/MAccount.ixx
         ParallelProgramming/FuturePromises.ixx
-        ProxyObjects/CWriteReadLazy.h)
+        ProxyObjects/CWriteReadLazy.h
+        Classes/OOD/Strategy/IShape.h
+        Classes/OOD/Strategy/Strategies/IDrawStrategy.h
+        Classes/OOD/Strategy/CCircle.h
+        Classes/OOD/Strategy/Strategies/COpenGLCircleStrategy.h
+        Classes/OOD/Strategy/StrategyMain.cpp
+        Classes/OOD/Strategy/StrategyMain.h
+        Classes/OOD/Strategy/Strategies/CAnotherCircleStrategy.h
+        Classes/OOD/Strategy/CSquare.h
+        Classes/OOD/Strategy/Strategies/COpenGLSquareStrategy.h)
 
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

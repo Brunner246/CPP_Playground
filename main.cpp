@@ -16,6 +16,7 @@
 #include "Concepts/CNotNullptr.h"
 #include "ProxyObjects/ExtensionMethod.h"
 #include "ProxyObjects/CWriteReadLazy.h"
+#include "Classes/OOD/Strategy/StrategyMain.h"
 #include <cassert>
 
 import Playground;
@@ -357,6 +358,10 @@ int main()
 
 	std::cout << lStream.str() << std::endl;
 
+	}
+
+	{
+		Strategy::strategyMain();
 	}
 
 	return EXIT_SUCCESS;
