@@ -55,7 +55,10 @@ add_executable(CPP_Playground
         Classes/OOD/Strategy/StrategyMain.h
         Classes/OOD/Strategy/Strategies/CAnotherCircleStrategy.h
         Classes/OOD/Strategy/CSquare.h
-        Classes/OOD/Strategy/Strategies/COpenGLSquareStrategy.h)
+        Classes/OOD/Strategy/Strategies/COpenGLSquareStrategy.h
+        Classes/Rule_of_/RuleOfFive.h
+        SOLID/SRP.ixx
+        SOLID/OCP.ixx)
 
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

@@ -27,6 +27,8 @@ import MImplementation;
 import MInterface;
 import MAccount;
 import FuturePromises;
+import SRP;
+import OCP;
 
 #if PARALLEL
 
@@ -342,26 +344,32 @@ int main()
 
 		auto lFuture = lPromise.get_future();
 		std::cout << "Waiting for result..." << std::endl;
-		try{
+		try {
 			auto lResult = lFuture.get();
 			std::cout << "Result: " << lResult << std::endl;
-			assert((lQuotient/ lDividend) == lResult);
-		} catch (const std::invalid_argument& e) {
+			assert((lQuotient / lDividend) == lResult);
+		} catch (const std::invalid_argument &e) {
 			std::cout << "Exception: " << e.what() << std::endl;
 		}
 
 	}
 	{
-	writeFile();
-	auto lReader = CWriteReadLazy(R"(C:\Users\michael.brunner\CLionProjects\CPP-Playground\ProxyObjects\fstream.dat)");
-	auto lStream = lReader.read();
+		writeFile();
+		auto lReader = CWriteReadLazy(R"(C:\Users\michael.brunner\CLionProjects\CPP-Playground\ProxyObjects\fstream.dat)");
+		auto lStream = lReader.read();
 
-	std::cout << lStream.str() << std::endl;
+		std::cout << lStream.str() << std::endl;
 
 	}
 
 	{
 		Strategy::strategyMain();
+	}
+	{
+		auto lDocument = SOLID::Document();
+		std::cout << lDocument.toJson();
+		std::cout << std::endl;
+		SOLID::testFunction();
 	}
 
 	return EXIT_SUCCESS;

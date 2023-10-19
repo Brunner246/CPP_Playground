@@ -21,6 +21,7 @@ namespace PrivateProxy {
 		}
 
 		bool operator==(const CLengthProxy &aOther) const = default;
+
 		auto operator<=>(const CLengthProxy &aOther) const = default;
 
 		friend auto operator<=>(const CLengthProxy &aOther, double aLength)
@@ -30,7 +31,7 @@ namespace PrivateProxy {
 		}
 
 		operator double() const && noexcept // && forces rvalue reference
-		{ // allow implicit cast to double
+		{
 			std::cout << "Implicit cast to double called" << std::endl;
 			return std::sqrt(mSquaredLength);
 		}
