@@ -60,10 +60,7 @@ add_executable(CPP_Playground
         SOLID/SRP.ixx
         SOLID/OCP.ixx
         Classes/OOD/Observer/TObserver.h
-        Classes/OOD/Observer/CWeatherData.cpp
-        Classes/OOD/Observer/CWeatherData.h
-        Classes/OOD/Observer/ObserverMain.cpp
-        Classes/OOD/Observer/ObserverMain.h
+        Classes/OOD/Observer/CWeatherData.ixx
 )
 
 

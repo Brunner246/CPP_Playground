@@ -17,7 +17,6 @@
 #include "ProxyObjects/ExtensionMethod.h"
 #include "ProxyObjects/CWriteReadLazy.h"
 #include "Classes/OOD/Strategy/StrategyMain.h"
-#include "Classes/OOD/Observer/ObserverMain.h"
 #include <cassert>
 
 import Playground;
@@ -30,6 +29,7 @@ import MAccount;
 import FuturePromises;
 import SRP;
 import OCP;
+import Observer;
 
 #if PARALLEL
 
@@ -449,7 +449,7 @@ int main()
 		}
 
 		{
-			observerMain();
+			OBSERVER::observerMain();
 		}
 
 	}
