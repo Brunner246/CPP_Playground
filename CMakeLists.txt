@@ -58,7 +58,13 @@ add_executable(CPP_Playground
         Classes/OOD/Strategy/Strategies/COpenGLSquareStrategy.h
         Classes/Rule_of_/RuleOfFive.h
         SOLID/SRP.ixx
-        SOLID/OCP.ixx)
+        SOLID/OCP.ixx
+        Classes/OOD/Observer/TObserver.h
+        Classes/OOD/Observer/CWeatherData.cpp
+        Classes/OOD/Observer/CWeatherData.h
+        Classes/OOD/Observer/ObserverMain.cpp
+        Classes/OOD/Observer/ObserverMain.h
+)
 
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

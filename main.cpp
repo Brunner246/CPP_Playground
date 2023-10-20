@@ -17,6 +17,7 @@
 #include "ProxyObjects/ExtensionMethod.h"
 #include "ProxyObjects/CWriteReadLazy.h"
 #include "Classes/OOD/Strategy/StrategyMain.h"
+#include "Classes/OOD/Observer/ObserverMain.h"
 #include <cassert>
 
 import Playground;
@@ -99,6 +100,51 @@ auto reflect(const Component &aComponent)
 	}
 }
 
+/////////////////////// FUNCTION TEMPLATE function ///////////////////////
+auto function(auto x) -> decltype(x) { return x; }
+
+/**
+ * @brief Concept for arithmetic types
+ * @tparam T
+ */
+template <typename T>
+concept IsNumber = std::is_arithmetic_v<T>
+		|| std::is_floating_point_v<T>;
+
+/**
+ * @brief Function template with concept
+ * @tparam T
+ * @return T
+ */
+template<IsNumber T>
+std::function<T(T,T)> f = [](T a, T b) -> T { return a + b; };
+
+/////////////////////// FUNCTION TEMPLATE f ///////////////////////
+
+void pointerArgs(std::string** aString)
+{
+	if (aString == nullptr
+	|| *aString == nullptr)
+	{
+		throw std::invalid_argument("aString is nullptr");
+	}
+	**aString = "Hello World";
+}
+
+void promises(std::string const& aString, std::promise<std::string>& aPromise)
+{
+	if (aString.empty())
+	{
+		const auto lException = std::invalid_argument("aString is empty");
+		aPromise.set_exception(std::make_exception_ptr(lException));
+	}
+	else
+	{
+		using namespace std::string_literals;
+		auto lResult = aString + " World"s;
+		aPromise.set_value(lResult);
+	}
+}
 
 int main()
 {
@@ -337,15 +383,15 @@ int main()
 
 	}
 	{
+		/////////////// Future and Promises ///////////////
 		std::promise<int> lPromise;
 		int lQuotient = 10;
 		int lDividend = 0;
 		std::jthread lThread{divide, lQuotient, lDividend, std::ref(lPromise)};
-
-		auto lFuture = lPromise.get_future();
+		auto lFuture = lPromise.get_future(); // get_future() must be called before the thread starts
 		std::cout << "Waiting for result..." << std::endl;
 		try {
-			auto lResult = lFuture.get();
+			auto lResult = lFuture.get(); // get() blocks until the result is available
 			std::cout << "Result: " << lResult << std::endl;
 			assert((lQuotient / lDividend) == lResult);
 		} catch (const std::invalid_argument &e) {
@@ -377,6 +423,35 @@ int main()
 
 		auto lFileName = "./journal.txt";
 		SOLID::SavingManager::save(lJournal, lFileName);
+	}
+	{
+		function(1);
+		std::future<int> lResult = std::async(std::launch::async, f<int>, 1, 2);
+		if (lResult.valid()) {
+			std::cout << "Result: " << lResult.get() << std::endl;
+		}
+		auto lResult2 = f<double>(1.123, 2.345);
+		std::cout << "Result: " << lResult2 << std::endl;
+	}
+	{
+		std::string* lPtr = nullptr;
+		std::string** lPtrPtr = &lPtr;
+		std::string lMyString = "Test";
+
+		try
+		{
+			pointerArgs(lPtrPtr);
+			std::cout << *lPtr << std::endl;
+		}
+		catch (std::invalid_argument& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+
+		{
+			observerMain();
+		}
+
 	}
 
 	return EXIT_SUCCESS;
