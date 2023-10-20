@@ -366,10 +366,17 @@ int main()
 		Strategy::strategyMain();
 	}
 	{
-		auto lDocument = SOLID::Document();
+		auto lDocument = SOLID::JsonDocument();
 		std::cout << lDocument.toJson();
 		std::cout << std::endl;
 		SOLID::testFunction();
+
+		auto lJournal = SOLID::Journal("My Journal");
+		lJournal.add_entries("I ate a bug");
+		lJournal.add_entries("I cried today");
+
+		auto lFileName = "./journal.txt";
+		SOLID::SavingManager::save(lJournal, lFileName);
 	}
 
 	return EXIT_SUCCESS;
